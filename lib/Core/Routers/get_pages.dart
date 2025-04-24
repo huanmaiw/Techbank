@@ -1,10 +1,9 @@
 import 'package:get/get.dart';
 import 'package:huanmaiw/MVC/View/Screen/home_screen.dart';
 import 'package:huanmaiw/MVC/View/Screen/home_screen_login.dart';
-import 'package:huanmaiw/MVC/View/Screen/login_screen.dart';
-import 'package:huanmaiw/MVC/View/Screen/phone_auth_screen.dart';
+import 'package:huanmaiw/Core/Service/Firebase/login_screen.dart';
 import 'package:huanmaiw/MVC/View/Screen/register_now_screen.dart';
-import 'package:huanmaiw/MVC/View/Screen/register_screen.dart';
+import 'package:huanmaiw/Core/Service/Firebase/register_screen.dart';
 import 'package:huanmaiw/MVC/View/Screen/set_password_screen.dart';
 import 'package:huanmaiw/MVC/View/Screen/splash_screen.dart';
 import 'package:huanmaiw/MVC/View/Screen/splash_second_screen.dart';
@@ -13,7 +12,6 @@ import 'package:huanmaiw/MVC/View/Screen/type_account_screen.dart';
 class Routers {
   static const splash = '/splash';
   static const splashSecond = '/splashSecond';
-
   static const login = '/login';
   static const home = '/home';
   static const register = '/register';
@@ -46,7 +44,7 @@ class GetPages {
     ),
     GetPage(
       name: Routers.login,
-      page: () => LoginScreen(),
+      page: () => const LoginScreen(),
 
     ),
     GetPage(
@@ -55,11 +53,7 @@ class GetPages {
     ),
     GetPage(
       name: Routers.register,
-      page: () => RegisterScreen(),
-    ),
-    GetPage(
-      name: Routers.phoneAuth,
-      page: () => const PhoneAuthScreen(),
+      page: () => const RegisterScreen(),
     ),
     GetPage(
       name:Routers.setPassword,
