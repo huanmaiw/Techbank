@@ -6,7 +6,6 @@ import 'get_pages.dart';
 
 class GetApp extends StatelessWidget {
   const GetApp({super.key});
-// giao diện chính của app
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -17,9 +16,7 @@ class GetApp extends StatelessWidget {
       getPages: GetPages.pages,
       theme: AppTheme.lightTheme,
       themeMode: ThemeMode.system,
-      //builder: EasyLoading.init(),
       popGesture: true,
-      //initialBinding: AppBindings(),
     );
   }
 }

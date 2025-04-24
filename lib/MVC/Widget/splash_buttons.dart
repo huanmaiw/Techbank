@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:huanmaiw/Core/Routers/get_pages.dart';
 import 'package:huanmaiw/Core/Space/Color/res_color.dart';
 import 'package:huanmaiw/Core/Space/insets.dart';
-import 'package:huanmaiw/MVC/View/Screen/type_account_screen.dart';
 
 class SplashButtons extends StatelessWidget {
   const SplashButtons({super.key});
@@ -18,10 +18,10 @@ class SplashButtons extends StatelessWidget {
               backgroundColor: ResColor.red,
               foregroundColor: ResColor.white,
             ),
-            onPressed: () {
-              // TODO: Xử lý sự kiện "Tôi là khách hàng mới"
-              Get.to(()=> const TypeAccountScreen());
-            },
+            onPressed: () =>
+            Get.toNamed(
+              Routers.splashSecond,
+            ),
             child: const Text('Tôi là khách hàng mới'),
           ),
         ),
@@ -34,9 +34,10 @@ class SplashButtons extends StatelessWidget {
               foregroundColor: ResColor.black,
               side: const BorderSide(color: ResColor.black),
             ),
-            onPressed: () {
-              // TODO: Xử lý sự kiện "Đăng nhập"
-            },
+            onPressed: ()
+            => Get.toNamed(
+              Routers.login,
+            ),
             child: const Text('Đăng nhập'),
           ),
         ),

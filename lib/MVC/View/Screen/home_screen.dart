@@ -58,8 +58,6 @@ class HomeScreen extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 20),
-
-            // Menu chức năng
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: SingleChildScrollView(
@@ -77,8 +75,6 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-
-            // Techcombank Rewards và Sinh lợi từ đồng
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Row(

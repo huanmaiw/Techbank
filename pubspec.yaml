@@ -43,6 +43,8 @@ dependencies:
   google_fonts: ^6.2.1
   flutter_easyloading: ^3.0.5
   font_awesome_flutter: ^10.7.0
+  fl_chart: ^0.71.0
+  modal_bottom_sheet: ^3.0.0
 
 dev_dependencies:
   flutter_test:
