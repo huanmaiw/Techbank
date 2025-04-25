@@ -46,7 +46,7 @@ class _LanguageSwitchState extends State<LanguageSwitch> {
             activeColor: Colors.white, // Màu của nút tròn khi bật
             activeTrackColor: ResColor.green, // Màu nền của thanh khi bật
             inactiveThumbColor: Colors.white, // Màu của nút tròn khi tắt
-            inactiveTrackColor: ResColor.white, // Màu nền của thanh khi tắt
+            inactiveTrackColor: Colors.green, // Màu nền của thanh khi tắt
             materialTapTargetSize: MaterialTapTargetSize.padded,
             trackOutlineColor: MaterialStateProperty.resolveWith((states) {
               return isEnglish ? ResColor.green : ResColor.white;

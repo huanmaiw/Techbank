@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:huanmaiw/Core/Service/Firebase/change_password.dart';
 import 'package:huanmaiw/Core/Service/Firebase/forgot_password.dart';
+import 'package:huanmaiw/MVC/Binding/bindings.dart';
 import 'package:huanmaiw/MVC/View/Screen/Drawer/drawer_screen.dart';
 import 'package:huanmaiw/MVC/View/Screen/home_screen.dart';
 import 'package:huanmaiw/Core/Service/Firebase/login_screen.dart';
@@ -46,15 +48,16 @@ class GetPages {
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),
     ),
-    GetPage(
-      name: Routers.forgotPassword,
-      page: () => const ForgotPassword(),
-      transition: Transition.size,
-      transitionDuration: const Duration(milliseconds: 500),
-    ),
+    // GetPage(
+    //   name: Routers.forgotPassword,
+    //   page: () => const ForgotPassword(),
+    //   transition: Transition.size,
+    //   transitionDuration: const Duration(milliseconds: 500),
+    // ),
     GetPage(
       name: Routers.typeAcc,
       page: () => const TypeAccountScreen(),
+
     ),
     GetPage(
       name: Routers.register,
@@ -84,5 +87,32 @@ class GetPages {
       name: Routers.notification,
       page: () =>  const NotificationScreen(),
     ),
+    //------------------------------------------------
+    // GetPage(
+    //   name: '/change-password',
+    //   page: () => const ChangePasswordScreen(),
+    //   binding: ChangePasswordBinding(),
+    // ),
+    // GetPage(
+    //   name: '/forgot-password',
+    //   page: () => const ForgotPasswordScreen(),
+    //   binding: ForgotPasswordBinding(),
+    // ),
+    // GetPage(
+    //   name: '/login',
+    //   page: () => const LoginScreen(),
+    //   binding: LoginBinding(),
+    // ),
+    // GetPage(
+    //   name: '/register',
+    //   page: () => const RegisterScreen(),
+    //   binding: RegisterBinding(),
+    // ),
+    // GetPage(
+    //   name: '/set-password',
+    //   page: () => const SetPasswordScreen(),
+    //   binding: SetPasswordBinding(),
+    // ),
+
   ];
 }

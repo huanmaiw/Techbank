@@ -59,7 +59,6 @@ class _DrawerScreenState extends State<DrawerScreen> {
                     Icons.notifications_none, "Thông báo",
                     badge: "4",
                     onTap: () {
-                      // Sử dụng Navigator để điều hướng đến SettingsScreen
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => const NotificationScreen()),
@@ -79,7 +78,6 @@ class _DrawerScreenState extends State<DrawerScreen> {
                         MaterialPageRoute(builder: (context) => const SettingsScreen()),
                       );
                     },
-                    // onTap: () => _onItemTapped(const SettingsScreen()), // Chuyển qua màn Cài đặt trong Drawer
                   ),
                   _buildItem(
                     Icons.people_alt_outlined, "Giới thiệu bạn bè",

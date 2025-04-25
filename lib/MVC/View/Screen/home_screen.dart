@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:huanmaiw/MVC/Widget/snackbar_helper.dart';
 import 'package:ionicons/ionicons.dart';
-
 import 'Drawer/drawer_screen.dart';
 import 'Home/Account/account_card.dart';
 import 'Home/Banking/banking.dart';
 import 'Home/QR/scan_qr.dart';
-// Màn hình cho Quét mã QR
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -27,7 +26,7 @@ class HomeScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     _buildBalanceCard(),
-                    _buildMainFunctions(context), // Truyền context vào
+                    _buildMainFunctions(context),
                     _buildPromoShort(),
                     _buildBottomBanners(),
                   ],
@@ -74,8 +73,9 @@ class HomeScreen extends StatelessWidget {
           children: [
             Row(
               children: [
-                Image.asset("assets/logo/splash.png", height: 100, width: 100),
-                const SizedBox(width: 16),
+                //Image.asset("assets/logo/iconapp.png", height: 100, width: 100,),
+                Image.asset("assets/logo/splash.png", height: 90, width: 90),
+                 const SizedBox(width: 16),
                 const Column(
                   children: [
                     Text("Số dư hiện có",
@@ -122,28 +122,114 @@ class HomeScreen extends StatelessWidget {
           final item = entry.value;
           return GestureDetector(
             onTap: () {
-              // Xử lý hành động khi nhấn vào từng mục
               switch (index) {
                 case 0: // Tài khoản & Thẻ
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const AccountScreen()),
+                    MaterialPageRoute(
+                        builder: (context) => const AccountScreen()),
                   );
                   break;
-                case 1: // Chuyển tiền & thanh toán
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const TransferScreen()),
+                case 1:
+                  Get.bottomSheet(
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.1),
+                            blurRadius: 10,
+                            spreadRadius: 5,
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          // Handle and Title
+                          Container(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            child: Column(
+                              children: [
+                                Container(
+                                  width: 40,
+                                  height: 5,
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey.shade300,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                const Text(
+                                  'Chuyển khoản qua số tài khoản',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black87,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          // Options
+                          ListTile(
+                            leading: const Icon(
+                              Icons.supervisor_account_sharp,
+                              color: Colors.blueAccent,
+                              size: 40,
+                            ),
+                            title: const Text(
+                              'Giao dịch giữa các tài khoản Techcombank',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.black87,
+                              ),
+                            ),
+                            onTap: () {
+                              Get.offAll(()=> const TransferScreen());
+                            },
+                            tileColor: Colors.grey.shade50,
+                            contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                          ),
+                          const Divider(height: 1, thickness: 1, color: Colors.grey),
+                          ListTile(
+                            leading: const Icon(
+                              Icons.account_balance,
+                              color: Colors.orangeAccent,
+                              size: 40,
+                            ),
+                            title: const Text(
+                              'Giao dịch qua các ngân hàng khác',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.black87,
+                              ),
+                            ),
+                            onTap: () {
+                              SnackbarHelper.showFeatureComingSoon();
+                            },
+                            tileColor: Colors.grey.shade50,
+                            contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                          ),
+                          const SizedBox(height: 20),
+                        ],
+                      ),
+                    ),
+                    isScrollControlled: true,
+                    enableDrag: true,
+                    isDismissible: true,
                   );
                   break;
                 case 2: // Quét mã QR
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const QRScanScreen()),
+                    MaterialPageRoute(
+                        builder: (context) => const QRScanScreen()),
                   );
                   break;
                 default:
-                  SnackbarHelper.showFeatureComingSoon(); // Các mục khác chưa được triển khai
+                  SnackbarHelper.showFeatureComingSoon();
               }
             },
             child: Column(
@@ -173,12 +259,12 @@ class HomeScreen extends StatelessWidget {
       ),
       child: const Row(
         children: [
-           Icon(Icons.campaign, color: Colors.red),
-           SizedBox(width: 12),
+          Icon(Icons.campaign, color: Colors.red),
+          SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children:  [
+              children: [
                 Text(
                   "Vay nhanh, chơi lễ thêm xông xênh",
                   style: TextStyle(fontWeight: FontWeight.bold),
@@ -191,10 +277,10 @@ class HomeScreen extends StatelessWidget {
               ],
             ),
           ),
-           SizedBox(width: 8),
+          SizedBox(width: 8),
           IconButton(
             onPressed: SnackbarHelper.showFeatureComingSoon,
-            icon:  Icon(Icons.chevron_right),
+            icon: Icon(Icons.chevron_right),
           ),
         ],
       ),
