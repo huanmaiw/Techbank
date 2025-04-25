@@ -1,13 +1,16 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:huanmaiw/Core/Service/Firebase/forgot_password.dart';
+import 'package:huanmaiw/MVC/View/Screen/Drawer/drawer_screen.dart';
 import 'package:huanmaiw/MVC/View/Screen/home_screen.dart';
-import 'package:huanmaiw/MVC/View/Screen/home_screen_login.dart';
 import 'package:huanmaiw/Core/Service/Firebase/login_screen.dart';
-import 'package:huanmaiw/MVC/View/Screen/register_now_screen.dart';
 import 'package:huanmaiw/Core/Service/Firebase/register_screen.dart';
-import 'package:huanmaiw/MVC/View/Screen/set_password_screen.dart';
-import 'package:huanmaiw/MVC/View/Screen/splash_screen.dart';
-import 'package:huanmaiw/MVC/View/Screen/splash_second_screen.dart';
-import 'package:huanmaiw/MVC/View/Screen/type_account_screen.dart';
+import 'package:huanmaiw/MVC/View/Screen/Drawer/Notification/notification_screen.dart';
+import 'package:huanmaiw/Core/Service/Firebase/set_password_screen.dart';
+import 'package:huanmaiw/MVC/View/Screen/Drawer/Setting/Information/settings_screen.dart';
+import 'package:huanmaiw/MVC/View/Screen/Splash/splash_screen.dart';
+import 'package:huanmaiw/MVC/View/Screen/Splash/splash_second_screen.dart';
+import 'package:huanmaiw/MVC/View/Screen/Splash/type_account_screen.dart';
 
 class Routers {
   static const splash = '/splash';
@@ -16,24 +19,19 @@ class Routers {
   static const home = '/home';
   static const register = '/register';
   static const setPassword = '/setPassword';
-  static const phoneAuth = '/phoneAuth';
   static const forgotPassword = '/forgotPassword';
   static const verifyEmail = '/verifyEmail';
   static const resetPassword = '/resetPassword';
-  static const profile = '/profile';
-  static const editProfile = '/editProfile';
   static const changePassword = '/changePassword';
-  static const settings = '/settings';
-  static const homelogin = '/homelogin';
   static const typeAcc = '/typeAcc';
-  static const registerNow = '/registerNow';
+  static const homeTwo = '/homeTwo';
+  static const drawer = '/drawer';
+  static const setTings = '/setTings';
+  static const notification = '/notification';
 }
 class GetPages {
   static final List<GetPage> pages = [
-    GetPage(
-      name: Routers.typeAcc,
-      page: () => const TypeAccountScreen(),
-    ),
+
     GetPage(
       name: Routers.splash,
       page: () => const SplashScreen(),
@@ -45,27 +43,46 @@ class GetPages {
     GetPage(
       name: Routers.login,
       page: () => const LoginScreen(),
-
+      transition: Transition.fade,
+      transitionDuration: const Duration(milliseconds: 500),
     ),
     GetPage(
-      name: Routers.home,
-      page: () =>  const HomeScreen(),
+      name: Routers.forgotPassword,
+      page: () => const ForgotPassword(),
+      transition: Transition.size,
+      transitionDuration: const Duration(milliseconds: 500),
+    ),
+    GetPage(
+      name: Routers.typeAcc,
+      page: () => const TypeAccountScreen(),
     ),
     GetPage(
       name: Routers.register,
       page: () => const RegisterScreen(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(milliseconds: 500),
+      curve: Curves.easeInOut,
     ),
     GetPage(
       name:Routers.setPassword,
       page: () => const SetPasswordScreen(),
     ),
     GetPage(
-      name: Routers.homelogin,
-      page: () => const HomeScreenLogin(),
+      name: Routers.home,
+      page: () =>  const HomeScreen(),
     ),
     GetPage(
-      name: Routers.registerNow,
-      page: () => const RegisterNowScreen(),
+      name: Routers.drawer,
+      page: () =>  const DrawerScreen(
+      ),
+    ),
+    GetPage(
+      name: Routers.setTings,
+      page: () =>  const SettingsScreen(),
+    ),
+    GetPage(
+      name: Routers.notification,
+      page: () =>  const NotificationScreen(),
     ),
   ];
 }
