@@ -25,6 +25,8 @@ class ResColor {
   static const white = Color(0xFFFFFFFF);
   static const black = Color(0xFF000000);
   static const yellow = Color(0xFFFFC700);
+  static const violet = Color(0xFFC500FF);
+  static const theme = Color(0xFFFFF4DD);
 
   //orange
   static const orange = Color(0xFFFF5400);

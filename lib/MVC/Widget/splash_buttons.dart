@@ -20,7 +20,7 @@ class SplashButtons extends StatelessWidget {
             ),
             onPressed: () =>
             Get.toNamed(
-              Routers.splashSecond,
+              Routers.typeAcc,
             ),
             child: const Text('Tôi là khách hàng mới'),
           ),

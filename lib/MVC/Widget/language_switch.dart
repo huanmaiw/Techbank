@@ -16,19 +16,52 @@ class _LanguageSwitchState extends State<LanguageSwitch> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        const Text('VIE', style: TextStyle(fontWeight: FontWeight.bold)),
-        Switch(
-          value: isEnglish,
-          onChanged: (value) {
-            setState(() {
-              isEnglish = value;
-            });
-          },
-          activeColor: ResColor.green,
-          inactiveThumbColor: ResColor.green,
-          inactiveTrackColor: ResColor.white,
+        const Text(
+          'VIE',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+            color: Colors.black87,
+          ),
         ),
-        const Text('ENG', style: TextStyle(fontWeight: FontWeight.bold)),
+        const SizedBox(width: 8), // Thêm khoảng cách giữa Text và Switch
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(24),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.2),
+                blurRadius: 8,
+                offset: const Offset(0, 2),
+              ),
+            ],
+          ),
+          child: Switch(
+            value: isEnglish,
+            onChanged: (value) {
+              setState(() {
+                isEnglish = value;
+              });
+            },
+            activeColor: Colors.white, // Màu của nút tròn khi bật
+            activeTrackColor: ResColor.green, // Màu nền của thanh khi bật
+            inactiveThumbColor: Colors.white, // Màu của nút tròn khi tắt
+            inactiveTrackColor: ResColor.white, // Màu nền của thanh khi tắt
+            materialTapTargetSize: MaterialTapTargetSize.padded,
+            trackOutlineColor: MaterialStateProperty.resolveWith((states) {
+              return isEnglish ? ResColor.green : ResColor.white;
+            }),
+          ),
+        ),
+        const SizedBox(width: 8), // Thêm khoảng cách giữa Switch và Text
+        const Text(
+          'ENG',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+            color: Colors.black87,
+          ),
+        ),
       ],
     );
   }

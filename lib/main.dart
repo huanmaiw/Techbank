@@ -19,11 +19,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      theme: ThemeData(
+        primarySwatch: Colors.red,
+        scaffoldBackgroundColor: const Color(0xFFFFF4DD),
+        fontFamily: 'Inter',
+      ),
       title: "HuanMaiBank",
        initialRoute: Routers.splash,
         getPages: GetPages.pages,
       debugShowCheckedModeBanner: false,
-
 
     );
   }
