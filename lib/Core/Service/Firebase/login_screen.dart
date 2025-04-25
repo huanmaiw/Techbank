@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:huanmaiw/MVC/Controller/login_controller.dart';
+import 'package:huanmaiw/MVC/Widget/snackbar_helper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'auth_controller.dart';
 import 'forgot_password.dart';
@@ -125,7 +126,18 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 );
               }),
-
+               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                 children: [
+                   IconButton(onPressed: (){
+                     SnackbarHelper.showFeatureComingSoon();
+                   }, icon: const Icon(Icons.face, size: 50,)),
+              const SizedBox(width: 20),
+                   IconButton(onPressed: (){
+                     SnackbarHelper.showFeatureComingSoon();
+                   }, icon: const Icon(Icons.fingerprint, size: 50,)),
+                 ],
+               ) ,
               const SizedBox(height: 20),
 
               // Ghi nhớ đăng nhập
