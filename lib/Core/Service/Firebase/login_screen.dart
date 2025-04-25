@@ -57,11 +57,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       borderRadius: BorderRadius.circular(12)),
                 ),
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Vui lòng nhập email';
-                  }
-                  if (!RegExp(r'^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$')
-                      .hasMatch(value)) {
+                  if (value == null || value.isEmpty) return 'Vui lòng nhập email';
+                  if (!RegExp(r'^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
                     return 'Email không hợp lệ';
                   }
                   return null;
@@ -80,9 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       borderRadius: BorderRadius.circular(12)),
                 ),
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Vui lòng nhập mật khẩu';
-                  }
+                  if (value == null || value.isEmpty) return 'Vui lòng nhập mật khẩu';
                   return null;
                 },
               ),
@@ -93,44 +88,42 @@ class _LoginScreenState extends State<LoginScreen> {
                 return authController.isLoading.value
                     ? const CircularProgressIndicator()
                     : SizedBox(
-                        width: double.infinity,
-                        height: 50,
-                        child: ElevatedButton.icon(
-                          onPressed: () async {
-                            if (formKey.currentState!.validate()) {
-                              if (loginController.rememberMe.value) {
-                                final prefs =
-                                    await SharedPreferences.getInstance();
-                                await prefs.setString(
-                                  'email',
-                                  loginController.emailController.text.trim(),
-                                );
-                                await prefs.setString(
-                                  'password',
-                                  loginController.passwordController.text
-                                      .trim(),
-                                );
-                              }
+                  width: double.infinity,
+                  height: 50,
+                  child: ElevatedButton.icon(
+                    onPressed: () async {
+                      if (formKey.currentState!.validate()) {
+                        if (loginController.rememberMe.value) {
+                          final prefs = await SharedPreferences.getInstance();
+                          await prefs.setString(
+                            'email',
+                            loginController.emailController.text.trim(),
+                          );
+                          await prefs.setString(
+                            'password',
+                            loginController.passwordController.text.trim(),
+                          );
+                        }
 
-                              authController.signInWithEmail(
-                                loginController.emailController.text.trim(),
-                                loginController.passwordController.text.trim(),
-                              );
-                            }
-                          },
-                          icon: const Icon(Icons.login, color: Colors.white),
-                          label: const Text(
-                            'Đăng nhập',
-                            style: TextStyle(fontSize: 16, color: Colors.white),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blueAccent,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                          ),
-                        ),
-                      );
+                        authController.signInWithEmail(
+                          loginController.emailController.text.trim(),
+                          loginController.passwordController.text.trim(),
+                        );
+                      }
+                    },
+                    icon: const Icon(Icons.login, color: Colors.white),
+                    label: const Text(
+                      'Đăng nhập',
+                      style: TextStyle(fontSize: 16, color: Colors.white),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blueAccent,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                  ),
+                );
               }),
 
               const SizedBox(height: 20),
@@ -139,36 +132,13 @@ class _LoginScreenState extends State<LoginScreen> {
               Obx(() {
                 return Row(
                   children: [
-                    Transform.scale(
-                      scale: 1.2, // Tăng kích thước Checkbox
-                      child: Checkbox(
-                        value: loginController.rememberMe.value,
-                        onChanged: (value) {
-                          loginController.rememberMe.value = value!;
-                        },
-                        activeColor: Colors.green,
-                        // Màu của Checkbox khi được chọn
-                        checkColor: Colors.white,
-                        // Màu của dấu tích
-                        side: const BorderSide(color: Colors.grey, width: 1.5),
-                        // Viền của Checkbox khi chưa chọn
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              4), // Bo góc nhẹ cho Checkbox
-                        ),
-                        materialTapTargetSize:
-                            MaterialTapTargetSize.padded, // Tăng vùng chạm
-                      ),
+                    Checkbox(
+                      value: loginController.rememberMe.value,
+                      onChanged: (value) {
+                        loginController.rememberMe.value = value!;
+                      },
                     ),
-                    const SizedBox(width: 8),
-                    const Text(
-                      "Ghi nhớ đăng nhập",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black87,
-                      ),
-                    ),
+                    const Text("Ghi nhớ đăng nhập"),
                   ],
                 );
               }),

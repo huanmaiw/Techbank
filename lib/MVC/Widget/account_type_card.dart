@@ -5,7 +5,7 @@ class AccountTypeCard extends StatelessWidget {
   final IconData icon;
   final String title;
   final VoidCallback? onTap;
-  final Color cardColor; // Thêm tham số màu cho mỗi mục
+  final Color cardColor;
 
   const AccountTypeCard({
     super.key,
