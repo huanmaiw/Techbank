@@ -1,22 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:huanmaiw/Core/Routers/get_pages.dart';
 import 'package:huanmaiw/Core/Space/Color/res_color.dart';
-import 'package:huanmaiw/MVC/Widget/open_link.dart';
-import 'package:huanmaiw/MVC/Widget/snackbar_helper.dart';
-import 'Notification/notification_screen.dart';
-import 'Setting/Information/settings_screen.dart';
-
-class DrawerScreen extends StatefulWidget {
+import 'package:huanmaiw/MVC/Controller/drawer_controller.dart'
+as CustomDrawerController;
+class DrawerScreen extends StatelessWidget {
   const DrawerScreen({super.key});
 
   @override
-  _DrawerScreenState createState() => _DrawerScreenState();
-}
-
-class _DrawerScreenState extends State<DrawerScreen> {
-  @override
   Widget build(BuildContext context) {
+    final CustomDrawerController.DrawerController controller =
+    Get.put(CustomDrawerController.DrawerController());
     return Drawer(
       backgroundColor: const Color(0xFFFFF4DD),
       child: SafeArea(
@@ -58,26 +51,15 @@ class _DrawerScreenState extends State<DrawerScreen> {
                   _buildItem(
                     Icons.notifications_none, "Thông báo",
                     badge: "4",
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const NotificationScreen()),
-                      );
-                    },
+                    onTap: controller.goToNotificationScreen,
                   ),
                   _buildItem(
                     Icons.card_giftcard, "Ưu đãi",
-                    onTap: SnackbarHelper.showFeatureComingSoon,
+                    onTap: controller.showFeatureComingSoon,
                   ),
                   _buildItem(
                     Icons.settings, "Cài đặt",
-                    onTap: () {
-                      // Sử dụng Navigator để điều hướng đến SettingsScreen
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const SettingsScreen()),
-                      );
-                    },
+                    onTap: controller.goToSettingsScreen,
                   ),
                   _buildItem(
                     Icons.people_alt_outlined, "Giới thiệu bạn bè",
@@ -153,14 +135,14 @@ class _DrawerScreenState extends State<DrawerScreen> {
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: GestureDetector(
-                        onTap: SnackbarHelper.showFeatureComingSoon,
+                        onTap: controller.showFeatureComingSoon,
                         child: Container(
                           decoration: BoxDecoration(
                             color: ResColor.theme,
                             borderRadius: BorderRadius.circular(10),
                             border: Border.all(
                               color: ResColor.primaryColor,
-                              width: 1, // Độ rộng viền
+                              width: 1,
                             ),
                           ),
                           child: const ListTile(
@@ -180,9 +162,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
               child: Row(
                 children: [
                   ElevatedButton(
-                    onPressed: () {
-                      Get.toNamed(Routers.login);
-                    },
+                    onPressed: controller.logout,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.black,
                       foregroundColor: Colors.white,
@@ -194,64 +174,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                   ),
                   const Spacer(),
                   TextButton(
-                    onPressed: () {
-                      Get.bottomSheet(
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(20),
-                              topRight: Radius.circular(20),
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.2),
-                                blurRadius: 10,
-                                spreadRadius: 5,
-                              ),
-                            ],
-                          ),
-                          padding: const EdgeInsets.all(20),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Container(
-                                width: 40,
-                                height: 5,
-                                decoration: BoxDecoration(
-                                  color: Colors.grey[300],
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                              ),
-                              const SizedBox(height: 20),
-                              ListTile(
-                                leading: const Icon(Icons.facebook, size: 32, color: Colors.blue),
-                                title: const Text(
-                                  'Facebook: Kiệu Mai Huấn',
-                                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-                                ),
-                                onTap: () {
-                                  OpenLink().launchURL('https://www.facebook.com/profile.php?id=61560768990877');
-                                },
-                              ),
-                              const Divider(),
-                              ListTile(
-                                leading: const Icon(Icons.phone, size: 32, color: Colors.green),
-                                title: const Text(
-                                  'Zalo / SĐT: 0393433084',
-                                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-                                ),
-                                onTap: () {
-                                  OpenLink().launchURL('https://www.facebook.com/profile.php?id=61560768990877');
-                                },
-                              ),
-                            ],
-                          ),
-                        ),
-                        isScrollControlled: true, // Cho phép bottomSheet cao hơn
-                        backgroundColor: Colors.transparent, // Làm nền trong suốt để thấy góc bo
-                      );
-                    },
+                    onPressed: controller.showSupportInfo,
                     child: const Text("Hỗ trợ"),
                   ),
                 ],

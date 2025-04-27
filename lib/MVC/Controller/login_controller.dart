@@ -1,58 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:huanmaiw/Core/Service/Firebase/auth_controller.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:huanmaiw/Core/Routers/get_pages.dart';
+import 'package:huanmaiw/Core/Service/Firebase/auth_service.dart';
+import 'package:huanmaiw/MVC/Widget/snackbar_helper.dart';
 
 class LoginController extends GetxController {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final isLoading = false.obs;
+  final errorMessage = ''.obs;
   final rememberMe = false.obs;
-  final formKey = GlobalKey<FormState>();
+  var isPasswordVisible = false.obs;
 
-  final authController = Get.find<AuthController>();
-
-  @override
-  void onInit() {
-    super.onInit();
-    _loadSavedCredentials();
-  }
-
-  Future<void> _loadSavedCredentials() async {
-    final prefs = await SharedPreferences.getInstance();
-    emailController.text = prefs.getString('email') ?? '';
-    passwordController.text = prefs.getString('password') ?? '';
-  }
-
-  void login() async {
-    if (formKey.currentState?.validate() ?? false) {
-      if (rememberMe.value) {
-        final prefs = await SharedPreferences.getInstance();
-        await prefs.setString('email', emailController.text.trim());
-        await prefs.setString('password', passwordController.text.trim());
-      }
-
-      authController.signInWithEmail(
-        emailController.text.trim(),
-        passwordController.text.trim(),
-      );
+  Future<void> signInWithEmail(String email, String password) async {
+    if (email.isEmpty || password.isEmpty) {
+      SnackbarHelper.showError('Lỗi', 'Vui lòng nhập email và mật khẩu');
+      return;
     }
-  }
 
-  String? validateEmail(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Vui lòng nhập email';
+    if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(email)) {
+      SnackbarHelper.showError('Lỗi', 'Email không hợp lệ');
+      return;
     }
-    if (!RegExp(r'^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
-      return 'Email không hợp lệ';
-    }
-    return null;
-  }
 
-  String? validatePassword(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Vui lòng nhập mật khẩu';
+    isLoading.value = true;
+    try {
+      await AuthService.signInWithEmail(email, password);
+      Get.offAllNamed(Routers.home);
+      SnackbarHelper.showSuccess('Thành công', 'Đăng nhập thành công');
+    } catch (e) {
+      // Hiển thị thông báo lỗi
+      SnackbarHelper.showError('Đăng nhập thất bại', e.toString().replaceFirst('Exception: ', ''));
+    } finally {
+      isLoading.value = false;
     }
-    return null;
   }
 
   @override

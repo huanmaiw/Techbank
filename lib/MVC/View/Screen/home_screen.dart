@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:huanmaiw/MVC/Controller/account_controller.dart';
+import 'package:huanmaiw/MVC/View/Screen/Home/Account/account_card.dart';
 import 'package:huanmaiw/MVC/Widget/snackbar_helper.dart';
 import 'package:ionicons/ionicons.dart';
 import 'Drawer/drawer_screen.dart';
-import 'Home/Account/account_card.dart';
 import 'Home/Banking/banking.dart';
 import 'Home/QR/scan_qr.dart';
 
@@ -18,9 +19,7 @@ class HomeScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            // Phần header
             _buildHeader(context),
-            // Nội dung scrollable
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
@@ -75,7 +74,7 @@ class HomeScreen extends StatelessWidget {
               children: [
                 //Image.asset("assets/logo/iconapp.png", height: 100, width: 100,),
                 Image.asset("assets/logo/splash.png", height: 90, width: 90),
-                 const SizedBox(width: 16),
+                const SizedBox(width: 16),
                 const Column(
                   children: [
                     Text("Số dư hiện có",
@@ -123,11 +122,12 @@ class HomeScreen extends StatelessWidget {
           return GestureDetector(
             onTap: () {
               switch (index) {
-                case 0: // Tài khoản & Thẻ
+                case 0:
+                  Get.put(AccountController());
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const AccountScreen()),
+                        builder: (context) =>  const AccountScreen()),
                   );
                   break;
                 case 1:
@@ -292,9 +292,9 @@ class HomeScreen extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       child: Row(
         children: [
-          GestureDetector(
-            onTap: SnackbarHelper.showFeatureComingSoon,
-            child: Expanded(
+          Expanded(
+            child: GestureDetector(
+              onTap: SnackbarHelper.showFeatureComingSoon,
               child: _buildMiniBanner(
                 title: "Sinh Lời Trúng Lớn",
                 image: Icons.emoji_events,
@@ -302,10 +302,10 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
           ),
-          const Spacer(),
-          GestureDetector(
-            onTap: SnackbarHelper.showFeatureComingSoon,
-            child: Expanded(
+          const SizedBox(width: 16),
+          Expanded(
+            child: GestureDetector(
+              onTap: SnackbarHelper.showFeatureComingSoon,
               child: _buildMiniBanner(
                 title: "Cơ hội trúng nhà, xe tiền tỷ",
                 image: Icons.house_outlined,
@@ -317,6 +317,7 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
+
 
   Widget _buildMiniBanner({
     required String title,

@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:huanmaiw/Core/Space/insets.dart';
 
 class AccountTypeCard extends StatelessWidget {
   final IconData icon;
   final String title;
-  final VoidCallback? onTap;
+  final VoidCallback onTap;
   final Color cardColor;
 
   const AccountTypeCard({
     super.key,
     required this.icon,
     required this.title,
-    this.onTap,
-    required this.cardColor, // Màu của từng thẻ
+    required this.onTap,
+    required this.cardColor,
   });
 
   @override
@@ -20,29 +19,23 @@ class AccountTypeCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        height: 250,
-        width: 400,
+        padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: cardColor, // Áp dụng màu sắc của từng mục
-          borderRadius: BorderRadius.circular(16),
+          color: cardColor,
+          borderRadius: BorderRadius.circular(30),
         ),
-        child: Stack(
+        child: Row(
           children: [
-            Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(icon, size: 40),
-                  ResInset.g16,
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
+            Icon(icon, color: Colors.white, size: 24),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                title,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ),
           ],

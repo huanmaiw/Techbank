@@ -18,10 +18,7 @@ class SplashButtons extends StatelessWidget {
               backgroundColor: ResColor.red,
               foregroundColor: ResColor.white,
             ),
-            onPressed: () =>
-            Get.toNamed(
-              Routers.typeAcc,
-            ),
+            onPressed: () => Get.toNamed(Routers.typeAcc,),
             child: const Text('Tôi là khách hàng mới'),
           ),
         ),
@@ -34,10 +31,7 @@ class SplashButtons extends StatelessWidget {
               foregroundColor: ResColor.black,
               side: const BorderSide(color: ResColor.black),
             ),
-            onPressed: ()
-            => Get.toNamed(
-              Routers.login,
-            ),
+            onPressed: () => Get.toNamed(Routers.login,),
             child: const Text('Đăng nhập'),
           ),
         ),

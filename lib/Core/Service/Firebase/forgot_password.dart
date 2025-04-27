@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'auth_controller.dart';
+import 'package:huanmaiw/MVC/Controller/forgot_password_controller.dart';
 
-class ForgotPassword extends StatelessWidget {
-  const ForgotPassword({super.key});
+class ForgotPasswordScreen extends StatelessWidget {
+  const ForgotPasswordScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final AuthController authController = Get.put(AuthController());
+    final ForgotPasswordController forgotPasswordController = Get.put(ForgotPasswordController());
     final emailController = TextEditingController();
     final formKey = GlobalKey<FormState>();
 
@@ -25,7 +25,6 @@ class ForgotPassword extends StatelessWidget {
           ),
         ),
         centerTitle: true,
-        //title: const Text('Quên mật khẩu', style: TextStyle(color: Colors.white)),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
@@ -65,7 +64,7 @@ class ForgotPassword extends StatelessWidget {
 
               // Loading state or button
               Obx(() {
-                return authController.isLoading.value
+                return forgotPasswordController.isLoading.value
                     ? const CircularProgressIndicator()
                     : SizedBox(
                   width: double.infinity,
@@ -73,8 +72,8 @@ class ForgotPassword extends StatelessWidget {
                   child: ElevatedButton.icon(
                     onPressed: () {
                       if (formKey.currentState?.validate() ?? false) {
-                        // Gọi hàm trong AuthController để gửi email reset mật khẩu
-                        authController.sendPasswordResetEmail(emailController.text.trim());
+                        // Gọi hàm gửi yêu cầu reset mật khẩu trong ForgotPasswordController
+                        forgotPasswordController.sendPasswordResetEmail(emailController.text.trim());
                       }
                     },
                     icon: const Icon(Icons.email_outlined, color: Colors.white),
@@ -95,7 +94,7 @@ class ForgotPassword extends StatelessWidget {
               // Hiển thị lỗi nếu có
               Obx(() {
                 return Text(
-                  authController.errorMessage.value,
+                  forgotPasswordController.errorMessage.value,
                   style: const TextStyle(color: Colors.red),
                 );
               }),

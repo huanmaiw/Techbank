@@ -2,26 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:huanmaiw/Core/Space/Color/res_color.dart';
 import 'package:huanmaiw/Core/Space/insets.dart';
-import 'package:huanmaiw/MVC/View/Screen/Drawer/Setting/Information/infor_screen.dart';
-import 'package:huanmaiw/MVC/View/Screen/Drawer/Setting/Notification%20SD/balence_notification.dart';
-import 'package:huanmaiw/MVC/View/Screen/Drawer/Setting/Security/security_screen.dart';
+import 'package:huanmaiw/MVC/Controller/settings_controller.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final SettingsController controller = Get.put(SettingsController());
+
     return Scaffold(
       backgroundColor: ResColor.theme,
-      body:
-      SafeArea(
+      body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            IconButton(onPressed: (){
-              Get.back();
-            },
-                icon: const Icon(Icons.arrow_back_ios, color: Colors.black)),
+            IconButton(
+              onPressed: () {
+                Get.back();
+              },
+              icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
+            ),
             ResInset.g4,
             Expanded(
               child: ListView(
@@ -29,25 +30,18 @@ class SettingsScreen extends StatelessWidget {
                   _buildSettingItem(
                     icon: Icons.account_circle_outlined,
                     label: 'Thông tin cá nhân',
-                    onTap: () {
-                      Get.to(() => const InforScreen());
-                    },
+                    onTap: controller.goToPersonalInfo,
                   ),
                   _buildSettingItem(
                     icon: Icons.notifications,
                     label: 'Thông báo biến động số dư',
-                    onTap: () {
-                      Get.to(() => const BalanceNotificationScreen());
-                    },
+                    onTap: controller.goToBalanceNotification,
                   ),
                   _buildSettingItem(
                     icon: Icons.security,
                     label: 'Bảo mật',
-                    onTap: () {
-                      Get.to(()=> const SecurityScreen());
-                    },
+                    onTap: controller.goToSecurity,
                   ),
-              
                 ],
               ),
             ),

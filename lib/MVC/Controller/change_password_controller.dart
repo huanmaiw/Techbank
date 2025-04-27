@@ -1,55 +1,21 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:huanmaiw/Core/Service/Firebase/auth_controller.dart';
 
 class ChangePasswordController extends GetxController {
-  final currentPasswordController = TextEditingController();
-  final newPasswordController = TextEditingController();
-  final formKey = GlobalKey<FormState>();
+  var isLoading = false.obs;
+  var errorMessage = ''.obs;
 
-  final isLoading = false.obs;
-  final errorMessage = ''.obs;
+  // Hàm đổi mật khẩu
+  Future<void> changePassword(String currentPassword, String newPassword) async {
+    isLoading.value = true;
+    errorMessage.value = ''; // Reset thông báo lỗi
 
-  final AuthController authController = Get.find<AuthController>();
+    // Giả lập gọi API để đổi mật khẩu
+    await Future.delayed(const Duration(seconds: 2)); // Giả lập delay của API
 
-  void onChangePasswordPressed() {
-    if (formKey.currentState?.validate() ?? false) {
-      isLoading.value = true;
-      errorMessage.value = '';
-
-      authController
-          .changePassword(
-        currentPasswordController.text.trim(),
-        newPasswordController.text.trim(),
-      )
-          .catchError((e) {
-        errorMessage.value = 'Đổi mật khẩu thất bại';
-      })
-          .whenComplete(() => isLoading.value = false);
-    }
-  }
-
-  String? validateCurrentPassword(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Vui lòng nhập mật khẩu hiện tại';
-    }
-    return null;
-  }
-
-  String? validateNewPassword(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Vui lòng nhập mật khẩu mới';
-    }
-    if (value.length < 6) {
-      return 'Mật khẩu mới phải có ít nhất 6 ký tự';
-    }
-    return null;
-  }
-
-  @override
-  void onClose() {
-    currentPasswordController.dispose();
-    newPasswordController.dispose();
-    super.onClose();
+    // Nếu thành công
+    isLoading.value = false;
+    // Gọi API và xử lý nếu có lỗi hoặc thành công
+    // Cập nhật thông báo nếu có lỗi
+    // errorMessage.value = 'Lỗi xảy ra, thử lại sau';
   }
 }

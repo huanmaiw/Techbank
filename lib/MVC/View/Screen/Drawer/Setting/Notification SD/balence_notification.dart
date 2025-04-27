@@ -1,17 +1,16 @@
+// lib/MVC/View/Screen/Drawer/Setting/Notification SD/balence_notification.dart
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:huanmaiw/MVC/Controller/balance_notification_controller.dart';
 
-class BalanceNotificationScreen extends StatefulWidget {
+class BalanceNotificationScreen extends StatelessWidget {
   const BalanceNotificationScreen({super.key});
 
   @override
-  _BalanceNotificationScreenState createState() => _BalanceNotificationScreenState();
-}
-
-class _BalanceNotificationScreenState extends State<BalanceNotificationScreen> {
-  bool _isNotificationEnabled = false;
-
-  @override
   Widget build(BuildContext context) {
+    // Khởi tạo controller
+    final BalanceNotificationController controller = Get.put(BalanceNotificationController());
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -27,23 +26,20 @@ class _BalanceNotificationScreenState extends State<BalanceNotificationScreen> {
                   color: Colors.black87,
                 ),
               ),
-              Switch(
-                value: _isNotificationEnabled,
-                onChanged: (bool value) {
-                  setState(() {
-                    _isNotificationEnabled = value;
-                  });
-                },
-                activeColor: Colors.white, // Màu của nút tròn khi bật
-                activeTrackColor: Colors.green, // Màu nền của thanh khi bật
-                inactiveThumbColor: Colors.white, // Màu của nút tròn khi tắt
-                inactiveTrackColor: Colors.grey.shade300, // Màu nền của thanh khi tắt
-                materialTapTargetSize: MaterialTapTargetSize.padded,
-                // Tùy chỉnh thêm với trackOutlineColor nếu cần
-                trackOutlineColor: MaterialStateProperty.resolveWith((states) {
-                  return _isNotificationEnabled ? Colors.green : Colors.grey.shade300;
-                }),
-              ),
+              Obx(() {
+                return Switch(
+                  value: controller.isNotificationEnabled.value,
+                  onChanged: controller.toggleNotification,
+                  activeColor: Colors.white,
+                  activeTrackColor: Colors.green,
+                  inactiveThumbColor: Colors.white,
+                  inactiveTrackColor: Colors.grey.shade300,
+                  materialTapTargetSize: MaterialTapTargetSize.padded,
+                  trackOutlineColor: WidgetStateProperty.resolveWith((states) {
+                    return controller.isNotificationEnabled.value ? Colors.green : Colors.grey.shade300;
+                  }),
+                );
+              }),
             ],
           ),
         ),

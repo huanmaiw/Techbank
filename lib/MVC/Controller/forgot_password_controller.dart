@@ -1,43 +1,22 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:huanmaiw/Core/Service/Firebase/auth_controller.dart';
 
 class ForgotPasswordController extends GetxController {
-  final emailController = TextEditingController();
-  final formKey = GlobalKey<FormState>();
+  var isLoading = false.obs;
+  var errorMessage = ''.obs;
 
-  final isLoading = false.obs;
-  final errorMessage = ''.obs;
+  // Hàm gửi email reset mật khẩu
+  Future<void> sendPasswordResetEmail(String email) async {
+    isLoading.value = true;
+    errorMessage.value = ''; // Reset lỗi trước khi gửi yêu cầu mới
 
-  final AuthController authController = Get.find<AuthController>();
+    // Giả lập gửi email (thực tế bạn sẽ gọi API Firebase hoặc backend của bạn ở đây)
+    await Future.delayed(const Duration(seconds: 2));
 
-  void sendResetEmail() {
-    if (formKey.currentState?.validate() ?? false) {
-      isLoading.value = true;
-      errorMessage.value = '';
+    isLoading.value = false;
+    // Nếu có lỗi xảy ra
+    // errorMessage.value = 'Lỗi gửi email, thử lại sau!';
 
-      authController
-          .sendPasswordResetEmail(emailController.text.trim())
-          .catchError((_) {
-        errorMessage.value = 'Không thể gửi yêu cầu. Vui lòng thử lại.';
-      }).whenComplete(() => isLoading.value = false);
-    }
-  }
-
-  String? validateEmail(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Vui lòng nhập email';
-    }
-    final emailRegex = RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
-    if (!emailRegex.hasMatch(value)) {
-      return 'Email không hợp lệ';
-    }
-    return null;
-  }
-
-  @override
-  void onClose() {
-    emailController.dispose();
-    super.onClose();
+    // Nếu thành công
+    // errorMessage.value = ''; // Không có lỗi
   }
 }

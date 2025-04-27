@@ -1,34 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:huanmaiw/Core/Space/Color/res_color.dart';
-import 'auth_controller.dart';
+import 'package:huanmaiw/MVC/Controller/register_controller.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final authController = Get.put(AuthController());
+    final registerController = Get.put(RegisterController());
     final emailController = TextEditingController();
     final passwordController = TextEditingController();
     final confirmPasswordController = TextEditingController();
     final formKey = GlobalKey<FormState>();
 
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Color(0xFF2196F3), Color(0xFF21CBF3)],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-          ),
-        ),
-        centerTitle: true,
-        iconTheme: const IconThemeData(color: Colors.white),
-      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Form(
@@ -61,7 +47,6 @@ class RegisterScreen extends StatelessWidget {
                 },
               ),
               const SizedBox(height: 20),
-
               // Password
               TextFormField(
                 controller: passwordController,
@@ -95,10 +80,8 @@ class RegisterScreen extends StatelessWidget {
                 },
               ),
               const SizedBox(height: 30),
-
-              // Đăng ký button
               Obx(() {
-                return authController.isLoading.value
+                return registerController.isLoading.value
                     ? const CircularProgressIndicator()
                     : SizedBox(
                   width: double.infinity,
@@ -106,7 +89,7 @@ class RegisterScreen extends StatelessWidget {
                   child: ElevatedButton.icon(
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
-                        authController.registerWithEmail(
+                        registerController.registerWithEmail(
                           emailController.text.trim(),
                           passwordController.text.trim(),
                         );
@@ -115,17 +98,13 @@ class RegisterScreen extends StatelessWidget {
                     icon: const Icon(Icons.app_registration, color: ResColor.white),
                     label: const Text('Đăng ký', style: TextStyle(fontSize: 16, color: Colors.white)),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blueAccent,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                      backgroundColor: ResColor.red,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
                     ),
                   ),
                 );
               }),
               const SizedBox(height: 20),
-              // TextButton(
-              //   onPressed: () => Get.back(),
-              //   child: const Text("Đã có tài khoản? Đăng nhập", style: TextStyle(color: Colors.blue)),
-              // ),
             ],
           ),
         ),

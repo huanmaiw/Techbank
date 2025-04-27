@@ -6,32 +6,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'auth_controller.dart';
 import 'forgot_password.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
-  final authController = Get.put(AuthController());
-  final loginController = Get.put(LoginController());
-  final formKey = GlobalKey<FormState>();
-
-  @override
-  void initState() {
-    super.initState();
-    _loadSavedCredentials();
-  }
-
-  Future<void> _loadSavedCredentials() async {
-    final prefs = await SharedPreferences.getInstance();
-    loginController.emailController.text = prefs.getString('email') ?? '';
-    loginController.passwordController.text = prefs.getString('password') ?? '';
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final authController = Get.put(AuthController());
+    final loginController = Get.put(LoginController());
+    final formKey = GlobalKey<FormState>();
     return Scaffold(
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
@@ -54,8 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 decoration: InputDecoration(
                   labelText: 'Email',
                   prefixIcon: const Icon(Icons.email),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12)),
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) return 'Vui lòng nhập email';
@@ -68,23 +49,32 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 20),
 
               // Password
-              TextFormField(
-                controller: loginController.passwordController,
-                obscureText: true,
-                decoration: InputDecoration(
-                  labelText: 'Mật khẩu',
-                  prefixIcon: const Icon(Icons.lock),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12)),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) return 'Vui lòng nhập mật khẩu';
-                  return null;
-                },
-              ),
+              Obx(() {
+                return TextFormField(
+                  controller: loginController.passwordController,
+                  obscureText: loginController.isPasswordVisible.value,  // Điều chỉnh cho việc xem mật khẩu
+                  decoration: InputDecoration(
+                    labelText: 'Mật khẩu',
+                    prefixIcon: const Icon(Icons.lock),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        loginController.isPasswordVisible.value
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                      ),
+                      onPressed: () {
+                        loginController.isPasswordVisible.value = !loginController.isPasswordVisible.value;
+                      },
+                    ),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) return 'Vui lòng nhập mật khẩu';
+                    return null;
+                  },
+                );
+              }),
               const SizedBox(height: 30),
-
-              // Nút Đăng nhập
               Obx(() {
                 return authController.isLoading.value
                     ? const CircularProgressIndicator()
@@ -96,14 +86,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       if (formKey.currentState!.validate()) {
                         if (loginController.rememberMe.value) {
                           final prefs = await SharedPreferences.getInstance();
-                          await prefs.setString(
-                            'email',
-                            loginController.emailController.text.trim(),
-                          );
-                          await prefs.setString(
-                            'password',
-                            loginController.passwordController.text.trim(),
-                          );
+                          await prefs.setString('email', loginController.emailController.text.trim());
+                          await prefs.setString('password', loginController.passwordController.text.trim());
                         }
 
                         authController.signInWithEmail(
@@ -119,28 +103,33 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blueAccent,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                     ),
                   ),
                 );
               }),
-               Row(
+
+              // Icons for face and fingerprint
+              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                 children: [
-                   IconButton(onPressed: (){
-                     SnackbarHelper.showFeatureComingSoon();
-                   }, icon: const Icon(Icons.face, size: 50,)),
-              const SizedBox(width: 20),
-                   IconButton(onPressed: (){
-                     SnackbarHelper.showFeatureComingSoon();
-                   }, icon: const Icon(Icons.fingerprint, size: 50,)),
-                 ],
-               ) ,
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      SnackbarHelper.showFeatureComingSoon();
+                    },
+                    icon: const Icon(Icons.face, size: 50),
+                  ),
+                  const SizedBox(width: 20),
+                  IconButton(
+                    onPressed: () {
+                      SnackbarHelper.showFeatureComingSoon();
+                    },
+                    icon: const Icon(Icons.fingerprint, size: 50),
+                  ),
+                ],
+              ),
               const SizedBox(height: 20),
 
-              // Ghi nhớ đăng nhập
               Obx(() {
                 return Row(
                   children: [
@@ -156,7 +145,7 @@ class _LoginScreenState extends State<LoginScreen> {
               }),
               const SizedBox(height: 20),
               TextButton(
-                onPressed: () => Get.to(() => const ForgotPassword()),
+                onPressed: () => Get.to(() => const ForgotPasswordScreen()),
                 child: const Text(
                   "Quên mật khẩu?",
                   style: TextStyle(color: Colors.blue),
