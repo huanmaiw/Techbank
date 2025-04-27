@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import 'edit_info_screen.dart';
+import 'package:huanmaiw/MVC/Controller/user_info_controller.dart';
 
 class InforScreen extends StatelessWidget {
   const InforScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final UserInfoController controller = Get.put(UserInfoController());
+
     return Scaffold(
       backgroundColor: const Color(0xFFFFF4DD),
       body: SafeArea(
@@ -32,11 +33,21 @@ class InforScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  const InfoCard(title: 'Họ tên', value: 'Nguyễn Văn A'),
-                  const InfoCard(title: 'Email', value: 'vana@gmail.com'),
-                  const InfoCard(title: 'Mật khẩu', value: '********'),
-                  const InfoCard(title: 'Số tài khoản', value: '1234 5678 9101 1121'),
-                  const InfoCard(title: 'Số dư', value: '5.000.000 VNĐ'),
+                  Obx(() {
+                    return InfoCard(title: 'Họ tên', value: controller.user.value.name);
+                  }),
+                  Obx(() {
+                    return InfoCard(title: 'Email', value: controller.user.value.email);
+                  }),
+                  Obx(() {
+                    return InfoCard(title: 'Mật khẩu', value: controller.user.value.password);
+                  }),
+                  Obx(() {
+                    return InfoCard(title: 'Số tài khoản', value: controller.user.value.accountNumber);
+                  }),
+                  Obx(() {
+                    return InfoCard(title: 'Số dư', value: controller.user.value.balance);
+                  }),
                   const SizedBox(height: 24),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -46,9 +57,7 @@ class InforScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
-                    onPressed: () {
-                      Get.to(() => const EditInfoScreen());
-                    },
+                    onPressed: controller.editUserInfo,
                     child: const Text(
                       'Chỉnh sửa thông tin',
                       style: TextStyle(fontSize: 16, color: Colors.white),

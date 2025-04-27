@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'auth_controller.dart';
+import 'package:huanmaiw/MVC/Controller/change_password_controller.dart';
 
-class ChangePassword extends StatelessWidget {
-  const ChangePassword({super.key});
+class ChangePasswordScreen extends StatelessWidget {
+  const ChangePasswordScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Khởi tạo controller AuthController
-    final AuthController authController = Get.put(AuthController());
+    // Khởi tạo controller ChangePasswordController
+    final ChangePasswordController changePasswordController = Get.put(ChangePasswordController());
     final currentPasswordController = TextEditingController();
     final newPasswordController = TextEditingController();
     final formKey = GlobalKey<FormState>();
@@ -54,13 +54,13 @@ class ChangePassword extends StatelessWidget {
 
               // Nút đổi mật khẩu
               Obx(() {
-                return authController.isLoading.value
+                return changePasswordController.isLoading.value
                     ? const CircularProgressIndicator()  // Hiển thị progress khi đang xử lý
                     : ElevatedButton(
                   onPressed: () {
                     if (formKey.currentState?.validate() ?? false) {
-                      // Gọi hàm đổi mật khẩu trong AuthController
-                      authController.changePassword(
+                      // Gọi hàm đổi mật khẩu trong ChangePasswordController
+                      changePasswordController.changePassword(
                         currentPasswordController.text.trim(),
                         newPasswordController.text.trim(),
                       );
@@ -75,7 +75,7 @@ class ChangePassword extends StatelessWidget {
               // Hiển thị thông báo lỗi nếu có
               Obx(() {
                 return Text(
-                  authController.errorMessage.value,
+                  changePasswordController.errorMessage.value,
                   style: const TextStyle(color: Colors.red),
                 );
               }),

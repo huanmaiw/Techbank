@@ -1,26 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:huanmaiw/Core/Space/insets.dart';
+import 'package:huanmaiw/MVC/Controller/splash_second_controller.dart';
 import 'package:huanmaiw/MVC/Widget/language_switch.dart';
 import 'package:huanmaiw/MVC/Widget/splash_buttons.dart';
 import 'package:huanmaiw/MVC/Widget/splash_logo.dart';
 
-class SplashSecondScreen extends StatelessWidget {
+class SplashSecondScreen extends GetView<SplashSecondController> {
   const SplashSecondScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding:  EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-               LanguageSwitch(),
+              const LanguageSwitch(),
               ResInset.g20,
-               SplashLogo(),
+              FadeTransition(
+                opacity: controller.logoFadeAnimation,
+                child: const SplashLogo(),
+              ),
               ResInset.g20,
-               Spacer(),
-               SplashButtons(),
+              const Spacer(),
+              SlideTransition(
+                position: controller.buttonSlideAnimation,
+                child: const SplashButtons(),
+              ),
             ],
           ),
         ),

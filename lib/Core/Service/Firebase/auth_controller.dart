@@ -6,22 +6,22 @@ class AuthController extends GetxController {
   var isLoading = false.obs;
   var errorMessage = ''.obs;
 
-  // Đăng nhập
   Future<void> signInWithEmail(String email, String password) async {
+    if (email.isEmpty || password.isEmpty) {
+      SnackbarHelper.showError('Lỗi', 'Vui lòng nhập email và mật khẩu');
+      return;
+    }
     isLoading.value = true;
     try {
       await AuthService.signInWithEmail(email, password);
+      Get.offAllNamed(Routers.home);
       SnackbarHelper.showSuccess('Thành công', 'Đăng nhập thành công');
-      Get.offNamed(Routers.home);
     } catch (e) {
-      errorMessage.value = 'Đăng nhập thất bại: $e';
-      SnackbarHelper.showError('Lỗi', errorMessage.value);
+      SnackbarHelper.showError('Đăng nhập thất bại', e.toString());
     } finally {
       isLoading.value = false;
     }
   }
-
-  // Đăng ký
   Future<void> registerWithEmail(String email, String password) async {
     isLoading.value = true;
     try {
@@ -35,7 +35,6 @@ class AuthController extends GetxController {
     }
   }
 
-  // Gửi email reset password
   Future<void> sendPasswordResetEmail(String email) async {
     isLoading.value = true;
     try {
@@ -49,7 +48,6 @@ class AuthController extends GetxController {
     }
   }
 
-  // Đổi mật khẩu
   Future<void> changePassword(String currentPassword, String newPassword) async {
     isLoading.value = true;
     try {
@@ -63,12 +61,10 @@ class AuthController extends GetxController {
     }
   }
 
-  // Kiểm tra email đã xác minh
   Future<bool> checkEmailVerified() async {
     return await AuthService.checkEmailVerified();
   }
 
-  // Gửi lại email xác minh
   Future<void> resendVerificationEmail() async {
     isLoading.value = true;
     try {

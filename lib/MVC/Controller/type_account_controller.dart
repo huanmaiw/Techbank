@@ -1,27 +1,23 @@
 import 'package:get/get.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:huanmaiw/Core/Routers/get_pages.dart';
+import 'package:huanmaiw/MVC/Model/account_type_model.dart';
 import 'package:huanmaiw/MVC/Widget/snackbar_helper.dart';
-import '../Model/account_type_model.dart';
+
 class TypeAccountController extends GetxController {
-  final accountTypes = <AccountTypeModel>[].obs;
-  @override
-  void onInit() {
-    super.onInit();
-    loadAccountTypes();
-  }
-  void loadAccountTypes() {
-    accountTypes.value = [
-      AccountTypeModel(
-        title: 'Tài khoản cá nhân tiêu chuẩn',
-        icon: FontAwesomeIcons.facebook,
-        onTap: () => Get.toNamed(Routers.register),
-      ),
-      AccountTypeModel(
-        title: 'Tài khoản doanh nghiệp',
-        icon: FontAwesomeIcons.apple,
-        onTap: () => SnackbarHelper.showFeatureComingSoon(),
-      ),
-    ];
-  }
+  var accountTypes = <AccountType>[
+    AccountType(
+      title: 'Tài khoản cá nhân tiêu chuẩn',
+     icon: 'assets/icons/standard_account.png',
+      onTap: () => Get.toNamed('/register'),
+
+  ),
+
+    AccountType(
+      title: 'Tài khoản cho doanh nghiệp',
+      icon: 'assets/icons/vip_account.png',
+      onTap: () {
+       SnackbarHelper.showFeatureComingSoon();
+      },
+    ),
+  ].obs;
+
 }

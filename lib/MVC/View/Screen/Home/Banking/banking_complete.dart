@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:huanmaiw/MVC/View/Screen/home_screen.dart';
+import '../../../../Controller/transfer_controller2.dart';
 
 class TransferSuccessScreen extends StatelessWidget {
   const TransferSuccessScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final TransferController controller = Get.put(TransferController());
+
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5), // Light background color
+      backgroundColor: const Color(0xFFF5F5F5),
       body: SafeArea(
         child: Stack(
           children: [
-            // Background decorative elements (circles)
             Positioned(
               top: 20,
               left: 50,
@@ -49,14 +50,12 @@ class TransferSuccessScreen extends StatelessWidget {
                 ),
               ),
             ),
-            // Main content
             Center(
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // Success Icon
                     Container(
                       width: 100,
                       height: 100,
@@ -88,68 +87,35 @@ class TransferSuccessScreen extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(width: 8),
-                        Image.asset("assets/logo/iconapp.png",height: 50,width: 50,)
+                        Image.asset("assets/logo/iconapp.png", height: 50, width: 50)
                       ],
                     ),
                     const SizedBox(height: 8),
-                    const Text(
-                      'Chuyển thành công tới\nTRAN MAI HUAN',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                    ),
+                    Obx(() {
+                      final transfer = controller.transferModel.value;
+                      return Text(
+                        'Chuyển thành công tới\n${transfer.recipientName}',
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      );
+                    }),
                     const SizedBox(height: 8),
-                    const Text(
-                      '500,000,000 VND',
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                    ),
+                    Obx(() {
+                      return Text(
+                        controller.transferModel.value.amount,
+                        style: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      );
+                    }),
                     const SizedBox(height: 16),
-                    // Transaction Details
-                    Container(
-                      padding: const EdgeInsets.all(16.0),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
-                            blurRadius: 5,
-                            spreadRadius: 2,
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            'Thông tin chi tiết',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          _buildDetailRow(
-                            'Ngân hàng',
-                            'Techcombank\n4826777778',
-                          ),
-                          const SizedBox(height: 10),
-                          _buildDetailRow('Nội dung', 'TEST DAMES'),
-                          const SizedBox(height: 10),
-                          _buildDetailRow('Ngày thực hiện', '25 Tháng 4, 2025'),
-                          const SizedBox(height: 10),
-                          _buildDetailRow('Mã giao dịch', 'FT23045G6S5124194'),
-                        ],
-                      ),
-                    ),
+                    _buildTransactionDetails(),
                     const Spacer(),
                     SizedBox(
                       width: double.infinity,
@@ -159,9 +125,7 @@ class TransferSuccessScreen extends StatelessWidget {
                           SizedBox(
                             width: 300,
                             child: ElevatedButton(
-                              onPressed: () {
-                                Get.offAll(const HomeScreen());
-                              },
+                              onPressed: controller.completeTransfer,
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.green,
                                 padding: const EdgeInsets.symmetric(vertical: 16),
@@ -188,6 +152,51 @@ class TransferSuccessScreen extends StatelessWidget {
     );
   }
 
+  Widget _buildTransactionDetails() {
+    return Container(
+      padding: const EdgeInsets.all(16.0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 5,
+            spreadRadius: 2,
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Thông tin chi tiết',
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Obx(() {
+            final transfer = Get.find<TransferController>().transferModel.value;
+            return Column(
+              children: [
+                _buildDetailRow('Ngân hàng', '${transfer.bankName}\n${transfer.accountNumber}'),
+                const SizedBox(height: 10),
+                _buildDetailRow('Nội dung', transfer.description),
+                const SizedBox(height: 10),
+                _buildDetailRow('Ngày thực hiện', transfer.transactionDate),
+                const SizedBox(height: 10),
+                _buildDetailRow('Mã giao dịch', transfer.transactionCode),
+              ],
+            );
+          }),
+        ],
+      ),
+    );
+  }
+
   Widget _buildDetailRow(String title, String value) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -197,9 +206,9 @@ class TransferSuccessScreen extends StatelessWidget {
           child: Text(
             title,
             style: const TextStyle(
-              fontSize: 17,
-              color: Colors.grey,
-              fontWeight: FontWeight.bold
+                fontSize: 17,
+                color: Colors.grey,
+                fontWeight: FontWeight.bold
             ),
           ),
         ),

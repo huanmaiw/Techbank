@@ -1,40 +1,16 @@
+// lib/views/set_password_screen.dart
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:huanmaiw/MVC/Controller/set_password_controller.dart';
 
-class SetPasswordScreen extends StatefulWidget {
+class SetPasswordScreen extends StatelessWidget {
   const SetPasswordScreen({super.key});
 
   @override
-  _SetPasswordScreenState createState() => _SetPasswordScreenState();
-}
-
-class _SetPasswordScreenState extends State<SetPasswordScreen> {
-  final passwordController = TextEditingController();
-  final confirmPasswordController = TextEditingController();
-
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-
-  void setPassword() async {
-    if (passwordController.text.trim() != confirmPasswordController.text.trim()) {
-      Get.snackbar('Error', 'Passwords do not match');
-      return;
-    }
-
-    try {
-      User? user = _auth.currentUser;
-      if (user != null) {
-        await user.updatePassword(passwordController.text.trim());
-        Get.snackbar('Success', 'Password has been set');
-        Get.offAllNamed('/home'); // Chuyển đến màn hình chính
-      }
-    } catch (e) {
-      Get.snackbar('Error', e.toString());
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
+    // GetX controller
+    final SetPasswordController controller = Get.put(SetPasswordController());
+
     return Scaffold(
       appBar: AppBar(title: const Text('Set Password')),
       body: Padding(
@@ -43,7 +19,7 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             TextField(
-              controller: passwordController,
+              controller: controller.passwordController,
               obscureText: true,
               decoration: const InputDecoration(
                 labelText: 'Password',
@@ -52,7 +28,7 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
             ),
             const SizedBox(height: 16),
             TextField(
-              controller: confirmPasswordController,
+              controller: controller.confirmPasswordController,
               obscureText: true,
               decoration: const InputDecoration(
                 labelText: 'Confirm Password',
@@ -61,7 +37,7 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
             ),
             const SizedBox(height: 24),
             ElevatedButton(
-              onPressed: setPassword,
+              onPressed: controller.setPassword,
               child: const Text('Set Password'),
             ),
           ],

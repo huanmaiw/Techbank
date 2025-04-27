@@ -1,29 +1,25 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:huanmaiw/Core/Service/Firebase/auth_controller.dart';
+import 'package:huanmaiw/Core/Routers/get_pages.dart';
+import 'package:huanmaiw/Core/Service/Firebase/auth_service.dart';
+import 'package:huanmaiw/MVC/Widget/snackbar_helper.dart';
 
 class RegisterController extends GetxController {
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-  final confirmPasswordController = TextEditingController();
+  var isLoading = false.obs;
+  var errorMessage = ''.obs;
 
-  final formKey = GlobalKey<FormState>();
-  final AuthController authController = Get.find();
 
-  void register() {
-    if (formKey.currentState!.validate()) {
-      authController.registerWithEmail(
-        emailController.text.trim(),
-        passwordController.text.trim(),
-      );
+  Future<void> registerWithEmail(String email, String password) async {
+    isLoading.value = true;
+    try {
+      await AuthService.registerWithEmail(email, password);
+      Get.offAllNamed(Routers.login);
+      SnackbarHelper.showSuccess('Thành công', 'Đăng ký thành công');
+
+    } catch (e) {
+      errorMessage.value = 'Đăng ký thất bại: $e';
+      SnackbarHelper.showError('Lỗi', errorMessage.value);
+    } finally {
+      isLoading.value = false;
     }
-  }
-
-  @override
-  void onClose() {
-    emailController.dispose();
-    passwordController.dispose();
-    confirmPasswordController.dispose();
-    super.onClose();
   }
 }
