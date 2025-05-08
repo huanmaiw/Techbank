@@ -1,16 +1,24 @@
-# huanmaiw
+# Techcombank Clone
+A mobile banking app clone built with Flutter, simulating core features of Techcombank Mobile.
 
-A new Flutter project.
+## Features
+- User registration and login via RESTful API
+- Account balance and transaction history
+- QR code-based fund transfers
+- Push notifications for transaction alerts
 
-## Getting Started
+## Tech Stack
+- Frontend: Flutter, Dart, GetX
+- Backend: Node.js, Express, MongoDB
+- API: RESTful API with Dio
+- Others: qr_code_scanner, flutter_secure_storage
 
-This project is a starting point for a Flutter application.
+## Setup
+1. Clone the repo: `git clone https://github.com/huanmaiw/Techbank`
+2. Install dependencies: `flutter pub get`
+3. Configure API URL in `.env`
+4. Run: `flutter run`
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Screenshots
+![Login Screen](screenshots/login.png)
+![Transfer Screen](screenshots/transfer.png)
