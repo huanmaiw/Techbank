@@ -116,7 +116,7 @@ class AccountScreen extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 8),
-                  const Text('A826 0209 2003', style: TextStyle(color: Colors.red, fontSize: 20)),
+                  const Text('4826 0209 2003', style: TextStyle(color: Colors.red, fontSize: 20)),
                   const Divider(),
                   const Row(
                     children: [

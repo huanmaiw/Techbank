@@ -23,6 +23,9 @@ class DrawerController extends GetxController {
       middleText: 'Bạn có chắc chắn muốn đăng xuất không?',
       textCancel: 'Hủy',
       textConfirm: 'Đăng xuất',
+      titleStyle: const TextStyle(
+        fontWeight: FontWeight.bold,
+      ),
       cancelTextColor: ResColor.black,
       confirmTextColor: ResColor.white,
       backgroundColor: ResColor.white,

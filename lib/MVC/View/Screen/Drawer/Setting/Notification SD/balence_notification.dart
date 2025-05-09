@@ -19,7 +19,7 @@ class BalanceNotificationScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text(
-                'Bật thông báo',
+                'Bật thông báo biến động số dư',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w500,

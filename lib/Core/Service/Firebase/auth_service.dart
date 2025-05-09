@@ -3,18 +3,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 class AuthService {
   static final _auth = FirebaseAuth.instance;
 
-  // Đăng nhập
-  // static Future<void> signInWithEmail(String email, String password) async {
-  //   await _auth.signInWithEmailAndPassword(email: email, password: password);
-  // }
   static Future<void> signInWithEmail(String email, String password) async {
     try {
-      // Thiết lập ngôn ngữ để tránh lỗi X-Firebase-Locale
+
       await _auth.setLanguageCode('vi');
 
       // Đăng nhập với email và mật khẩu
       final userCred = await _auth.signInWithEmailAndPassword(
-        email: email.trim(), // Loại bỏ khoảng trắng thừa
+        email: email.trim(),
         password: password,
       );
 
