@@ -43,10 +43,10 @@ class _LanguageSwitchState extends State<LanguageSwitch> {
                 isEnglish = value;
               });
             },
-            activeColor: Colors.white, // Màu của nút tròn khi bật
-            activeTrackColor: ResColor.green, // Màu nền của thanh khi bật
-            inactiveThumbColor: Colors.white, // Màu của nút tròn khi tắt
-            inactiveTrackColor: Colors.green, // Màu nền của thanh khi tắt
+            activeColor: Colors.white,
+            activeTrackColor: ResColor.green,
+            inactiveThumbColor: Colors.white,
+            inactiveTrackColor: Colors.green,
             materialTapTargetSize: MaterialTapTargetSize.padded,
             trackOutlineColor: WidgetStateProperty.resolveWith((states) {
               return isEnglish ? ResColor.green : ResColor.white;

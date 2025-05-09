@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:huanmaiw/Core/Routers/get_pages.dart';
 
 class SplashController extends GetxController with GetTickerProviderStateMixin {
@@ -34,9 +35,17 @@ class SplashController extends GetxController with GetTickerProviderStateMixin {
 
     animationController.forward();
 
-    Future.delayed(const Duration(seconds: 2), () {
-      Get.offAllNamed(Routers.splashSecond);
-    });
+    // Sau animation 2s, kiểm tra đăng nhập
+    Future.delayed(const Duration(seconds: 2), _checkLoginStatus);
+  }
+
+  void _checkLoginStatus() {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      Get.offAllNamed(Routers.home);
+    } else {
+      Get.offAllNamed(Routers.login);
+    }
   }
 
   @override
